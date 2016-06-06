@@ -63,6 +63,10 @@ module.exports = bindEvents = (lc, canvas, panWithKeyboard = false) ->
     document.removeEventListener 'touchend', touchEndListener
     document.removeEventListener 'touchcancel', touchEndListener
 
+  canvas.addEventListener 'gesturechange', (e) ->
+    e.preventDefault();
+    lc.pinch e.scale, e.rotation
+
   canvas.addEventListener 'touchstart', (e) ->
     return if e.target.tagName.toLowerCase() != 'canvas'
     e.preventDefault()
@@ -71,6 +75,9 @@ module.exports = bindEvents = (lc, canvas, panWithKeyboard = false) ->
       document.addEventListener 'touchmove', touchMoveListener
       document.addEventListener 'touchend', touchEndListener
       document.addEventListener 'touchcancel', touchEndListener
+    # else if e.touches.length == 2
+    #   alert(e.touches.length)
+    #   alert(e.scale)
     else
       lc.pointerMove(coordsForTouchEvent(canvas, e)...)
 

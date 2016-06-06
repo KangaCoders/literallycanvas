@@ -438,11 +438,13 @@ defineShape 'Text',
     @font  = args.font or '18px sans-serif'
     @forcedWidth = args.forcedWidth or null
     @forcedHeight = args.forcedHeight or null
+    @angle = args.angle or 0
+    @scale = args.scale or 1
 
   _makeRenderer: (ctx) ->
     ctx.lineHeight = 1.2
     @renderer = new TextRenderer(
-      ctx, @text, @font, @forcedWidth, @forcedHeight)
+      ctx, @text, @font, @forcedWidth, @forcedHeight, @angle, @scale)
 
     if @v < 1
       console.log 'repairing baseline'
@@ -452,6 +454,14 @@ defineShape 'Text',
 
   setText: (text) ->
     @text = text
+    @renderer = null
+
+  setAngle: (angle) ->
+    @angle = angle
+    @renderer = null
+
+  setScale: (scale) ->
+    @scale = scale
     @renderer = null
 
   setFont: (font) ->
@@ -493,7 +503,7 @@ defineShape 'Text',
       width: Math.ceil(@renderer.getWidth(true)),
       height: Math.ceil(@renderer.getHeight())
     }
-  toJSON: -> {@x, @y, @text, @color, @font, @forcedWidth, @forcedHeight, @v}
+  toJSON: -> {@x, @y, @text, @color, @font, @forcedWidth, @forcedHeight, @v, @angle}
   fromJSON: (data) -> createShape('Text', data)
   move: ( moveInfo={} ) ->
     @x = @x - moveInfo.xDiff

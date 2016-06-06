@@ -86,7 +86,7 @@ getLinesToRender = (ctx, text, forcedWidth) ->
 
 
 class TextRenderer
-  constructor: (ctx, @text, @font, @forcedWidth, @forcedHeight) ->
+  constructor: (ctx, @text, @font, @forcedWidth, @forcedHeight, @angle, @scale) ->
     {fontFamily, fontSize} = parseFontString(@font)
 
     ctx.font = @font
@@ -118,12 +118,19 @@ class TextRenderer
     @boundingBoxWidth = Math.ceil(@metrics.width)
 
   draw: (ctx, x, y) ->
+    ctx.save()
+    {fontFamily, fontSize} = parseFontString(@font)
     ctx.textBaseline = 'top'
     ctx.font = @font
+    ctx.translate (x), (y + fontSize / 2)
+    ctx.rotate @angle * Math.PI / 180
+    ctx.scale @scale, @scale
+    ctx.translate -(x), -(y + fontSize / 2)
     i = 0
     for line in @lines
-      ctx.fillText(line, x, y + i * @metrics.leading)
+      ctx.fillText(line, (x - ctx.measureTextWidth(@text, fontSize, fontFamily).width / 2), y + i * @metrics.leading)
       i += 1
+    ctx.restore()
 
   getWidth: (isEditing=false) ->
     # if isEditing == true, add X padding to account for carat

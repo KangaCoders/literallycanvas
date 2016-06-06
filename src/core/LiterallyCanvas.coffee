@@ -151,6 +151,9 @@ module.exports = class LiterallyCanvas
 
   setShapesInProgress: (newVal) -> @_shapesInProgress = newVal
 
+  pinch: (scale, rotation) ->
+    @trigger("lc-pinch", {scale: scale, rotate: rotation});
+
   pointerDown: (x, y) ->
     p = @clientCoordsToDrawingCoords(x, y)
     if @tool.usesSimpleAPI
