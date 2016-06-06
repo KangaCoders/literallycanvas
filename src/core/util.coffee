@@ -120,6 +120,7 @@ util =
     rect
 
   getBackingScale: (context) ->
+    return 0.5
     return 1 unless window.devicePixelRatio?
     return 1 unless window.devicePixelRatio > 1
     return window.devicePixelRatio

@@ -7,16 +7,24 @@
     <meta name="viewport" content="width=device-width, user-scalable=no" />
 
     <style type="text/css">
+      html {
+        height: 100%;
+        width: 100%;
+      }
+      
       body {
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         margin: 0;
         background-color: gray;
-        height: 2000px;
+        height: 100%;
+        width: 100%;
       }
 
       .fs-container {
-       width: 1000px;
-       margin: 50px;
+       /*width: 1000px;
+       margin: 50px;*/
+        width: 100%;
+        height: 100%;
       }
 
       .literally {
@@ -78,7 +86,7 @@
     <div class="fs-container">
       <div class="literally"></div>
 
-      <div class="toolset">
+   <!--    <div class="toolset">
         <span class='toolLabel'>Actions:</span>
         <a href="javascript:void(0);" class='tool' id="open-image">Open image</a>
         <a href="javascript:void(0);" class='tool' id="change-size">Change size</a>
@@ -100,7 +108,7 @@
         <a href="javascript:void(0);" class='tool' id="tool-rectangle">Rectangle</a>
         <a href="javascript:void(0);" class='tool' id="tool-polygon">Polygon</a>
         <a href="javascript:void(0);" class='tool' id="tool-select">Select</a>
-      </div>
+      </div> -->
 
 <!-- SIZES WON'T WORK UNTIL SIZE EVENT PR IS MERGED! -->
 <!--       <div class="toolset" id="tools-sizes">
@@ -110,16 +118,16 @@
         <a href="javascript:void(0);" class='tool' id="sizeTool-3">Large</a>
       </div> -->
 
-      <div class="toolset" id="tools-colors">
+      <!-- <div class="toolset" id="tools-colors">
         <span class='toolLabel'>Colors:</span>
         <a href="javascript:void(0);" class='tool' id="colorTool-black">Black</a>
         <a href="javascript:void(0);" class='tool' id="colorTool-blue">Blue</a>
         <a href="javascript:void(0);" class='tool' id="colorTool-red">Red</a>
       </div>
 
-      <br>
-      <div class="svg-container"
-          style="display: inline-block; border: 1px solid yellow"></div>
+      <br> -->
+     <!--  <div class="svg-container"
+          style="display: inline-block; border: 1px solid yellow"></div> -->
     </div>
 
     <script src="/demo/jquery-1.8.2.js"></script>
@@ -135,15 +143,15 @@
       var setCurrentByName;
       var findByName;
 
-      var updateSVG = function() {
-        if (!lc) return;
-        $('.svg-container')[0].innerHTML = lc.getSVGString();
-      }
+      // var updateSVG = function() {
+      //   if (!lc) return;
+      //   $('.svg-container')[0].innerHTML = lc.getSVGString();
+      // }
 
       var backgroundImage = new Image();
       window.debugImage = backgroundImage;
 
-      LC.util.addImageOnload(backgroundImage, updateSVG);
+      // LC.util.addImageOnload(backgroundImage, updateSVG);
 
       backgroundImage.src = '/demo/bear.png';
 
@@ -174,6 +182,10 @@
               {x: 0, y: 0, width: 100, height: 100, strokeColor: '#000'})
           ],
         });
+
+        lc.clear();
+        // alert("kakker");
+
         window.demoLC = lc;
         lc.setWatermarkImage(watermarkImage);
 
@@ -186,23 +198,23 @@
         lc.on('pan', save);
         lc.on('zoom', save);
 
-        $("#open-image").click(function() {
-          window.open(lc.getImage({
-            scale: 1, margin: {top: 10, right: 10, bottom: 10, left: 10}
-          }).toDataURL());
-        });
+        // $("#open-image").click(function() {
+        //   window.open(lc.getImage({
+        //     scale: 1, margin: {top: 10, right: 10, bottom: 10, left: 10}
+        //   }).toDataURL());
+        // });
 
-        $("#change-size").click(function() {
-          lc.setImageSize(null, 200);
-        });
+        // $("#change-size").click(function() {
+        //   lc.setImageSize(null, 200);
+        // });
 
-        $("#reset-size").click(function() {
-          lc.setImageSize(null, null);
-        });
+        // $("#reset-size").click(function() {
+        //   lc.setImageSize(null, null);
+        // });
 
-        $("#clear-lc").click(function() {
-          lc.clear();
-        });
+        // $("#clear-lc").click(function() {
+        //   lc.clear();
+        // });
 
         // Set up our own tools...
         tools = [
@@ -350,20 +362,21 @@
           }
         });
         showLC();
+
       });
 
-      $('#hide-lc').click(function() {
-        if (lc) {
-          lc.teardown();
-          lc = null;
-        }
-      });
+      // $('#hide-lc').click(function() {
+      //   if (lc) {
+      //     lc.teardown();
+      //     lc = null;
+      //   }
+      // });
 
-      $('#show-lc').click(function() {
-        if (!lc) { showLC(); }
-      });
+      // $('#show-lc').click(function() {
+      //   if (!lc) { showLC(); }
+      // });
     </script>
 
-    <script src="//localhost:35728/livereload.js"></script>
+    <script src="//192.168.113.62:35728/livereload.js"></script>
   </body>
 </html>
